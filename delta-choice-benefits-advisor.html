@@ -1,0 +1,3045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta Choice Benefits Advisor | Find Your Best Medallion Perks</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free tool for Delta Platinum and Diamond Medallion members to find the most valuable Choice Benefits for their travel style. Personalized recommendations based on your profile.">
+    <meta name="keywords" content="Delta Choice Benefits, SkyMiles, Medallion Status, Diamond, Platinum, Delta Air Lines, upgrade certificates, Sky Club">
+    <meta name="author" content="Spencer X Smith">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tools.spencerxsmith.com/delta-choice-benefits/">
+    <meta property="og:title" content="Delta Choice Benefits Advisor">
+    <meta property="og:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
+    <meta property="og:image" content="https://tools.spencerxsmith.com/delta-choice-benefits/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://tools.spencerxsmith.com/delta-choice-benefits/">
+    <meta name="twitter:title" content="Delta Choice Benefits Advisor">
+    <meta name="twitter:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
+    <meta name="twitter:image" content="https://tools.spencerxsmith.com/delta-choice-benefits/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,95 5,95' fill='%23003366'/><polygon points='50,25 75,75 25,75' fill='%23C01933'/></svg>">
+    
+    <!-- Privacy-friendly Analytics (Plausible) -->
+    <script defer data-domain="tools.spencerxsmith.com" src="https://plausible.io/js/script.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --delta-blue: #003366;
+            --delta-blue-dark: #001f3f;
+            --delta-blue-light: #004d99;
+            --delta-red: #C01933;
+            --delta-red-dark: #9a1429;
+            --delta-gold: #B8860B;
+            --delta-silver: #A8A9AD;
+            --platinum-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --diamond-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            --gold-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--delta-blue);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.2);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .delta-widget {
+            width: 40px;
+            height: 40px;
+            position: relative;
+        }
+
+        .delta-widget svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+
+        .logo-subtext {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 2px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: var(--delta-blue-dark);
+            padding: 0.75rem 1.5rem;
+        }
+
+        .progress-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--delta-red);
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .progress-step.active {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .progress-step.completed {
+            color: var(--delta-red);
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: 2rem 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Welcome screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--delta-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--white);
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--delta-blue);
+            margin-bottom: 1rem;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 51, 102, 0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--delta-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        /* Question styling */
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--delta-blue);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.75rem;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .question-help {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-top: 0.5rem;
+            margin-left: 2.5rem;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .option-btn:hover {
+            border-color: var(--delta-blue-light);
+            background: var(--white);
+        }
+
+        .option-btn.selected {
+            border-color: var(--delta-blue);
+            background: rgba(0, 51, 102, 0.05);
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn.selected .option-radio {
+            border-color: var(--delta-blue);
+            background: var(--delta-blue);
+        }
+
+        .option-btn.selected .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: var(--gray-900);
+            font-size: 0.95rem;
+        }
+
+        .option-sublabel {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* Checkbox options */
+        .checkbox-grid {
+            display: grid;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-btn:hover {
+            border-color: var(--delta-blue-light);
+        }
+
+        .checkbox-btn.selected {
+            border-color: var(--delta-blue);
+            background: rgba(0, 51, 102, 0.05);
+        }
+
+        .checkbox-box {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-btn.selected .checkbox-box {
+            border-color: var(--delta-blue);
+            background: var(--delta-blue);
+        }
+
+        .checkbox-btn.selected .checkbox-box::after {
+            content: '✓';
+            color: var(--white);
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Slider */
+        .slider-container {
+            margin-top: 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--gray-200);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--delta-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,51,102,0.3);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .slider-value {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--delta-blue);
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--delta-red);
+            color: var(--white);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: var(--delta-red-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--delta-blue);
+            border: 2px solid var(--delta-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--delta-blue);
+            color: var(--white);
+        }
+
+        /* Year toggle */
+        .year-toggle {
+            display: flex;
+            background: var(--gray-100);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .year-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .year-btn.active {
+            background: var(--white);
+            color: var(--delta-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Results */
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.75rem;
+            color: var(--delta-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .results-subtitle {
+            color: var(--gray-500);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge.platinum {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .status-badge.diamond {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+        }
+
+        /* Recommendation card */
+        .recommendation-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 51, 102, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-rank {
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .rank-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .rank-badge.rank-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+        }
+
+        .rank-badge.rank-2 {
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+            color: #333;
+        }
+
+        .rank-badge.rank-3 {
+            background: linear-gradient(135deg, #CD7F32, #8B4513);
+            color: white;
+        }
+
+        .rank-badge.rank-other {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .recommendation-content {
+            flex: 1;
+        }
+
+        .recommendation-name {
+            font-weight: 600;
+            color: var(--gray-900);
+            font-size: 1rem;
+        }
+
+        .recommendation-value {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        .recommendation-score {
+            text-align: right;
+        }
+
+        .score-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--delta-blue);
+        }
+
+        .score-label {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+        }
+
+        .recommendation-details {
+            padding: 0 1.25rem 1.25rem;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+
+        .detail-label {
+            color: var(--gray-500);
+        }
+
+        .detail-value {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .detail-value.positive {
+            color: #059669;
+        }
+
+        .why-box {
+            background: rgba(0, 51, 102, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .why-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--delta-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .why-text {
+            font-size: 0.85rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        /* Expandable section */
+        .expandable-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 0.75rem 0;
+        }
+
+        .expand-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .expand-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        /* Summary box */
+        .summary-box {
+            background: linear-gradient(135deg, var(--delta-blue) 0%, var(--delta-blue-dark) 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-content {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+
+        .summary-item-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .summary-item-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-100);
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .footer a {
+            color: var(--delta-blue);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+            .header {
+                padding: 0.875rem 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column-reverse;
+            }
+
+            .btn-secondary {
+                justify-content: center;
+            }
+        }
+
+        /* Desktop enhancements */
+        @media (min-width: 1024px) {
+            .main-content {
+                padding: 3rem 2rem;
+            }
+
+            .options-grid.two-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .checkbox-grid.two-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Countdown styles */
+        .countdown-banner {
+            background: linear-gradient(135deg, #C01933 0%, #9a1429 100%);
+            border-radius: 12px;
+            padding: 1.25rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .countdown-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .countdown-icon {
+            font-size: 2rem;
+        }
+
+        .countdown-text {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .countdown-days {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .countdown-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Share card styles */
+        .share-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: 2px dashed var(--gray-200);
+        }
+
+        .share-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .share-title {
+            font-weight: 600;
+            color: var(--delta-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-preview {
+            background: var(--gray-50);
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .share-btn.copy {
+            background: var(--delta-blue);
+            color: white;
+        }
+
+        .share-btn.copy:hover {
+            background: var(--delta-blue-dark);
+        }
+
+        .share-btn.twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .share-btn.twitter:hover {
+            background: #1a8cd8;
+        }
+
+        .share-btn.reddit {
+            background: #FF4500;
+            color: white;
+        }
+
+        .share-btn.reddit:hover {
+            background: #e03d00;
+        }
+
+        .copied-toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* What-if toggles */
+        .whatif-section {
+            background: linear-gradient(135deg, rgba(0,51,102,0.03) 0%, rgba(0,51,102,0.08) 100%);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,51,102,0.1);
+        }
+
+        .whatif-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .whatif-title {
+            font-weight: 600;
+            color: var(--delta-blue);
+            font-size: 0.95rem;
+        }
+
+        .whatif-subtitle {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 1rem;
+        }
+
+        .whatif-toggles {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .whatif-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .whatif-toggle.active {
+            border-color: var(--delta-blue);
+            background: rgba(0,51,102,0.02);
+        }
+
+        .whatif-label {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--gray-300);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--delta-blue);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .whatif-impact {
+            font-size: 0.75rem;
+            color: var(--delta-blue);
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Comparison Mode */
+        .comparison-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-title {
+            font-weight: 600;
+            color: var(--delta-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-chip {
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 2px solid var(--gray-200);
+            background: var(--gray-50);
+            color: var(--gray-600);
+            transition: all 0.2s ease;
+        }
+
+        .comparison-chip:hover {
+            border-color: var(--delta-blue-light);
+        }
+
+        .comparison-chip.selected {
+            background: var(--delta-blue);
+            border-color: var(--delta-blue);
+            color: white;
+        }
+
+        .comparison-chip.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            font-weight: 600;
+            color: var(--delta-blue);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .attr-name {
+            font-weight: 500;
+            color: var(--gray-700);
+            width: 30%;
+        }
+
+        .comparison-winner {
+            background: rgba(5, 150, 105, 0.1);
+            color: #059669;
+            font-weight: 600;
+        }
+
+        /* Selection Tracker */
+        .tracker-section {
+            background: linear-gradient(135deg, rgba(0, 211, 255, 0.05) 0%, rgba(58, 123, 213, 0.1) 100%);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(58, 123, 213, 0.2);
+        }
+
+        .tracker-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .tracker-title {
+            font-weight: 600;
+            color: var(--delta-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tracker-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tracker-progress-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tracker-progress-fill {
+            height: 100%;
+            background: var(--delta-blue);
+            transition: width 0.3s ease;
+        }
+
+        .tracker-progress-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--delta-blue);
+        }
+
+        .tracker-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tracker-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .tracker-item:hover {
+            border-color: var(--delta-blue-light);
+        }
+
+        .tracker-item.checked {
+            background: rgba(5, 150, 105, 0.1);
+            border-color: #059669;
+        }
+
+        .tracker-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .tracker-item.checked .tracker-checkbox {
+            background: #059669;
+            border-color: #059669;
+        }
+
+        .tracker-item.checked .tracker-checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .tracker-item-content {
+            flex: 1;
+        }
+
+        .tracker-item-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--gray-900);
+        }
+
+        .tracker-item-value {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .tracker-clear {
+            background: none;
+            border: none;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .tracker-clear:hover {
+            color: var(--delta-red);
+        }
+
+        /* Historical Context */
+        .history-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .history-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .history-title {
+            font-weight: 600;
+            color: var(--delta-blue);
+        }
+
+        .history-timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-200);
+        }
+
+        .history-year {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .history-year:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-year::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--delta-blue);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 2px var(--delta-blue);
+        }
+
+        .history-year-label {
+            font-weight: 700;
+            color: var(--delta-blue);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-changes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .history-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+        }
+
+        .history-change.increase {
+            color: #059669;
+        }
+
+        .history-change.decrease {
+            color: #dc2626;
+        }
+
+        .history-change.neutral {
+            color: var(--gray-500);
+        }
+
+        /* Print Styles */
+        .print-btn {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .print-btn:hover {
+            background: var(--gray-200);
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                font-size: 12pt;
+            }
+
+            .header, .progress-container, .footer,
+            .nav-buttons, .year-toggle, .whatif-section,
+            .share-section, .comparison-section, .tracker-section,
+            .print-btn, .countdown-btn, .expand-icon,
+            .confetti-container {
+                display: none !important;
+            }
+
+            .main-content {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .card, .summary-box, .recommendation-card, 
+            .history-section, .methodology-section {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .summary-box {
+                background: #f5f5f5 !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .summary-box * {
+                color: black !important;
+            }
+
+            .results-header {
+                text-align: left !important;
+                border-bottom: 2px solid var(--delta-blue);
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .status-badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .recommendation-card {
+                margin-bottom: 0.75rem !important;
+            }
+
+            .recommendation-details {
+                display: block !important;
+            }
+
+            .print-header {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 3px solid var(--delta-blue);
+            }
+
+            .print-header h1 {
+                font-size: 18pt;
+                color: var(--delta-blue);
+                margin-bottom: 0.5rem;
+            }
+
+            .print-header p {
+                font-size: 10pt;
+                color: #666;
+            }
+
+            .countdown-banner {
+                background: #f5f5f5 !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .countdown-banner * {
+                color: black !important;
+            }
+        }
+
+        .print-header {
+            display: none;
+        }
+
+        .print-summary {
+            display: none;
+        }
+
+        @media print {
+            .print-summary {
+                display: block !important;
+                margin-top: 2rem;
+                padding: 1rem;
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+            }
+
+            .print-summary h3 {
+                font-size: 12pt;
+                margin-bottom: 0.5rem;
+            }
+
+            .print-summary ul {
+                margin: 0;
+                padding-left: 1.5rem;
+            }
+
+            .print-summary li {
+                margin-bottom: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!--
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║  Delta Choice Benefits Advisor                                            ║
+    ║  A Project by Spencer X Smith                                             ║
+    ║  https://spencerxsmith.com                                                ║
+    ║                                                                           ║
+    ║  © 2026 Spencer X Smith. All rights reserved.                             ║
+    ║  Free to use for personal purposes. Redistribution, hosting, or           ║
+    ║  commercial use without permission is prohibited.                         ║
+    ║                                                                           ║
+    ║  Not affiliated with Delta Air Lines, Inc.                                ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+    -->
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // ============ DATA ============
+        const BENEFITS_DATA = {
+            2025: {
+                platinum: {
+                    selections: 1,
+                    benefits: [
+                        { id: 'regional_upgrades', name: '4 Regional Upgrade Certificates', dollarValue: 400, category: 'upgrades', description: 'One-class upgrade on domestic flights' },
+                        { id: 'amex_credit', name: 'Amex Statement Credit', dollarValue: 400, category: 'cash', description: 'Credit on eligible Delta Amex cards', requiresAmex: true },
+                        { id: 'bonus_miles', name: '30,000 Bonus SkyMiles', dollarValue: 360, category: 'miles', description: 'For yourself, someone else, or charity' },
+                        { id: 'travel_voucher', name: '$300 Delta Travel Voucher', dollarValue: 300, category: 'travel', description: 'Valid 12 months, non-transferable' },
+                        { id: 'mqd_accelerator', name: '$1,000 MQD Accelerator', dollarValue: 1000, category: 'status', description: 'Toward next year\'s status', conditional: true },
+                        { id: 'gift_status', name: 'Gift Silver Status (2 people)', dollarValue: 300, category: 'gifting', description: 'Share Silver Medallion benefits' },
+                        { id: 'starbucks', name: '6,000 Starbucks Stars', dollarValue: 150, category: 'other', description: 'Expires 6 months after deposit' },
+                        { id: 'delta_vacations', name: '$400 Delta Vacations Credit', dollarValue: 400, category: 'travel', description: 'Flight + hotel, 2-night minimum' },
+                        { id: 'saf', name: '$250 SAF Contribution', dollarValue: 0, category: 'charity', description: 'Support sustainable aviation fuel' },
+                        { id: 'wheels_up', name: '$1,500 Wheels Up Credit', dollarValue: 1500, category: 'premium', description: 'Private aviation credit' }
+                    ]
+                },
+                diamond: {
+                    selections: 3,
+                    benefits: [
+                        { id: 'global_upgrades', name: '4 Global Upgrade Certificates', dollarValue: 2000, category: 'upgrades', description: 'International business class upgrades' },
+                        { id: 'regional_upgrades_8', name: '8 Regional Upgrade Certificates', dollarValue: 800, category: 'upgrades', description: 'Domestic first class upgrades' },
+                        { id: 'mixed_upgrades', name: '2 Global + 4 Regional Certificates', dollarValue: 1200, category: 'upgrades', description: 'Mix of international & domestic' },
+                        { id: 'amex_credit', name: 'Amex Statement Credit', dollarValue: 700, category: 'cash', description: 'Credit on eligible Delta Amex cards', requiresAmex: true },
+                        { id: 'bonus_miles', name: '35,000 Bonus SkyMiles', dollarValue: 420, category: 'miles', description: 'For yourself, someone else, or charity' },
+                        { id: 'travel_voucher', name: '$350 Delta Travel Voucher', dollarValue: 350, category: 'travel', description: 'Valid 12 months, non-transferable' },
+                        { id: 'mqd_accelerator', name: '$2,000 MQD Accelerator', dollarValue: 2000, category: 'status', description: 'Toward next year\'s status', conditional: true },
+                        { id: 'gift_status', name: 'Gift Gold Status (2 people)', dollarValue: 500, category: 'gifting', description: 'Share Gold Medallion benefits' },
+                        { id: 'sky_club_exec', name: 'Sky Club Executive Membership', dollarValue: 1495, category: 'lounge', description: 'Self + 2 guests, uses 3 choices', cost: 3 },
+                        { id: 'sky_club_ind', name: 'Sky Club Individual Membership', dollarValue: 695, category: 'lounge', description: 'Self only, uses 2 choices', cost: 2 },
+                        { id: 'starbucks', name: '6,000 Starbucks Stars', dollarValue: 150, category: 'other', description: 'Expires 6 months after deposit' },
+                        { id: 'delta_vacations', name: '$500 Delta Vacations Credit', dollarValue: 500, category: 'travel', description: 'Flight + hotel, 2-night minimum' },
+                        { id: 'saf', name: '$250 SAF Contribution', dollarValue: 0, category: 'charity', description: 'Support sustainable aviation fuel' },
+                        { id: 'wheels_up', name: '$2,000 Wheels Up Credit', dollarValue: 2000, category: 'premium', description: 'Private aviation credit' }
+                    ]
+                }
+            },
+            2026: {
+                platinum: {
+                    selections: 1,
+                    benefits: [
+                        { id: 'regional_upgrades', name: '4 Regional Upgrade Certificates', dollarValue: 400, category: 'upgrades', description: 'One-class upgrade on domestic flights' },
+                        { id: 'amex_credit', name: 'Amex Statement Credit', dollarValue: 250, category: 'cash', description: 'Credit on eligible Delta Amex cards', requiresAmex: true, changed: 'decreased' },
+                        { id: 'bonus_miles', name: '35,000 Bonus SkyMiles', dollarValue: 420, category: 'miles', description: 'For yourself, someone else, or charity', changed: 'increased' },
+                        { id: 'travel_voucher', name: '$350 Delta Travel Voucher', dollarValue: 350, category: 'travel', description: 'Valid 12 months, non-transferable', changed: 'increased' },
+                        { id: 'mqd_accelerator', name: '$1,000 MQD Accelerator', dollarValue: 1000, category: 'status', description: 'Toward 2027 status', conditional: true },
+                        { id: 'gift_status', name: 'Gift Silver Status (4 people)', dollarValue: 600, category: 'gifting', description: 'Share Silver Medallion benefits', changed: 'increased' },
+                        { id: 'starbucks', name: '6,000 Starbucks Stars', dollarValue: 150, category: 'other', description: 'Expires 6 months after deposit' },
+                        { id: 'delta_vacations', name: '$400 Delta Vacations Credit', dollarValue: 400, category: 'travel', description: 'Flight + hotel, 4-night minimum', changed: 'decreased' },
+                        { id: 'saf', name: '$250 SAF Contribution', dollarValue: 0, category: 'charity', description: 'Support sustainable aviation fuel' },
+                        { id: 'wheels_up', name: '$1,500 Wheels Up Credit', dollarValue: 1500, category: 'premium', description: 'Private aviation credit' }
+                    ]
+                },
+                diamond: {
+                    selections: 3,
+                    benefits: [
+                        { id: 'global_upgrades', name: '4 Global Upgrade Certificates', dollarValue: 2000, category: 'upgrades', description: 'International business class upgrades' },
+                        { id: 'regional_upgrades_8', name: '8 Regional Upgrade Certificates', dollarValue: 800, category: 'upgrades', description: 'Domestic first class upgrades' },
+                        { id: 'mixed_upgrades', name: '2 Global + 4 Regional Certificates', dollarValue: 1200, category: 'upgrades', description: 'Mix of international & domestic' },
+                        { id: 'amex_credit', name: 'Amex Statement Credit', dollarValue: 500, category: 'cash', description: 'Credit on eligible Delta Amex cards', requiresAmex: true, changed: 'decreased' },
+                        { id: 'bonus_miles', name: '40,000 Bonus SkyMiles', dollarValue: 480, category: 'miles', description: 'For yourself, someone else, or charity', changed: 'increased' },
+                        { id: 'travel_voucher', name: '$550 Delta Travel Voucher', dollarValue: 550, category: 'travel', description: 'Valid 12 months, non-transferable', changed: 'increased' },
+                        { id: 'mqd_accelerator', name: '$2,000 MQD Accelerator', dollarValue: 2000, category: 'status', description: 'Toward 2027 status', conditional: true },
+                        { id: 'gift_status', name: 'Gift Gold Status (4 people)', dollarValue: 1000, category: 'gifting', description: 'Share Gold Medallion benefits', changed: 'increased' },
+                        { id: 'sky_club_exec', name: 'Sky Club Executive Membership', dollarValue: 1495, category: 'lounge', description: 'Self + 2 guests, uses 3 choices', cost: 3 },
+                        { id: 'sky_club_ind', name: 'Sky Club Individual Membership', dollarValue: 695, category: 'lounge', description: 'Self only, uses 2 choices', cost: 2 },
+                        { id: 'starbucks', name: '6,000 Starbucks Stars', dollarValue: 150, category: 'other', description: 'Expires 6 months after deposit' },
+                        { id: 'delta_vacations', name: '$500 Delta Vacations Credit', dollarValue: 500, category: 'travel', description: 'Flight + hotel, 4-night minimum', changed: 'decreased' },
+                        { id: 'saf', name: '$250 SAF Contribution', dollarValue: 0, category: 'charity', description: 'Support sustainable aviation fuel' },
+                        { id: 'wheels_up', name: '$2,000 Wheels Up Credit', dollarValue: 2000, category: 'premium', description: 'Private aviation credit' }
+                    ]
+                }
+            }
+        };
+
+        const QUESTIONS = [
+            {
+                id: 'year',
+                text: 'Which Medallion Year are you selecting Choice Benefits for?',
+                help: '2025 benefits must be selected by Jan 31, 2026. 2026 benefits must be selected by Jan 31, 2027.',
+                type: 'single',
+                options: [
+                    { value: '2025', label: '2025 Medallion Year', sublabel: 'Selection deadline: Jan 31, 2026' },
+                    { value: '2026', label: '2026 Medallion Year', sublabel: 'Selection deadline: Jan 31, 2027' }
+                ]
+            },
+            {
+                id: 'status',
+                text: 'What Medallion Status did you earn?',
+                help: 'Platinum members get 1 selection. Diamond members get 3 selections.',
+                type: 'single',
+                options: [
+                    { value: 'platinum', label: 'Platinum Medallion', sublabel: '1 Choice Benefit selection' },
+                    { value: 'diamond', label: 'Diamond Medallion', sublabel: '3 Choice Benefit selections' }
+                ]
+            },
+            {
+                id: 'hasAmex',
+                text: 'Do you have a Delta SkyMiles American Express Card?',
+                help: 'Statement credits require a Delta Platinum, Platinum Business, Reserve, or Reserve Business Amex.',
+                type: 'single',
+                options: [
+                    { value: 'reserve', label: 'Yes - Reserve or Reserve Business', sublabel: '$695 annual fee' },
+                    { value: 'platinum', label: 'Yes - Platinum or Platinum Business', sublabel: '$350 annual fee' },
+                    { value: 'gold', label: 'Yes - Gold card only', sublabel: 'Not eligible for statement credits' },
+                    { value: 'none', label: 'No Delta Amex card', sublabel: '' }
+                ]
+            },
+            {
+                id: 'travelStyle',
+                text: 'How do you primarily travel on Delta?',
+                help: 'This helps us understand upgrade certificate value for you.',
+                type: 'single',
+                options: [
+                    { value: 'domestic', label: 'Mostly domestic flights', sublabel: 'Within the U.S.' },
+                    { value: 'international', label: 'Mostly international flights', sublabel: 'Transatlantic, transpacific, etc.' },
+                    { value: 'mixed', label: 'Mix of both', sublabel: 'Roughly equal domestic and international' }
+                ]
+            },
+            {
+                id: 'cabinPreference',
+                text: 'What cabin class do you typically book?',
+                help: 'Upgrade certificates provide more value if you\'re booking upgradeable fares.',
+                type: 'single',
+                options: [
+                    { value: 'basic', label: 'Basic Economy', sublabel: 'Not upgradeable' },
+                    { value: 'main', label: 'Main Cabin', sublabel: 'Upgradeable with certificates' },
+                    { value: 'comfort', label: 'Comfort+ or Premium Select', sublabel: 'Upgradeable with certificates' },
+                    { value: 'premium', label: 'First/Business Class', sublabel: 'Already in premium cabin' }
+                ]
+            },
+            {
+                id: 'flightsPerYear',
+                text: 'Approximately how many Delta flights do you take per year?',
+                help: 'More flights = more opportunities to use upgrade certificates.',
+                type: 'slider',
+                min: 5,
+                max: 100,
+                step: 5,
+                defaultValue: 25
+            },
+            {
+                id: 'statusGoal',
+                text: 'Are you trying to reach or maintain a higher status tier next year?',
+                help: 'MQD accelerators are most valuable if you\'re close to a threshold.',
+                type: 'single',
+                options: [
+                    { value: 'maintain', label: 'Just maintaining current status', sublabel: 'No pressure to earn more MQDs' },
+                    { value: 'stretch', label: 'Stretching for next tier', sublabel: 'Every MQD counts' },
+                    { value: 'unsure', label: 'Not sure yet', sublabel: 'Depends on travel plans' }
+                ]
+            },
+            {
+                id: 'loungeAccess',
+                text: 'How do you currently access Delta Sky Clubs?',
+                help: 'This affects whether a Sky Club membership choice is valuable.',
+                type: 'single',
+                options: [
+                    { value: 'reserve', label: 'Reserve card benefit', sublabel: 'Already have unlimited access' },
+                    { value: 'amex_plat', label: 'Amex Platinum (non-Delta)', sublabel: 'Limited visits, may have fees' },
+                    { value: 'membership', label: 'Existing Sky Club membership', sublabel: 'Already a member' },
+                    { value: 'day_pass', label: 'Day passes when needed', sublabel: 'Pay per visit' },
+                    { value: 'none', label: 'Don\'t use Sky Clubs', sublabel: '' }
+                ]
+            },
+            {
+                id: 'travelCompanions',
+                text: 'Do you typically travel with others who could benefit from gifted status?',
+                help: 'Gifted status includes upgrades, free bags, priority boarding.',
+                type: 'single',
+                options: [
+                    { value: 'family', label: 'Yes - family members travel often', sublabel: 'Multiple people who\'d use the benefits' },
+                    { value: 'occasional', label: 'Occasionally', sublabel: '1-2 people who might benefit' },
+                    { value: 'solo', label: 'Usually travel solo', sublabel: 'Gifted status less valuable' }
+                ]
+            },
+            {
+                id: 'priorities',
+                text: 'What matters most to you? (Select up to 3)',
+                help: 'This helps us weight the recommendations.',
+                type: 'multi',
+                maxSelections: 3,
+                options: [
+                    { value: 'cash', label: 'Cash-equivalent value', sublabel: 'Statement credits, vouchers' },
+                    { value: 'upgrades', label: 'Upgrade opportunities', sublabel: 'Better seats on flights' },
+                    { value: 'miles', label: 'Earning more SkyMiles', sublabel: 'For award flights' },
+                    { value: 'lounge', label: 'Airport lounge access', sublabel: 'Sky Club benefits' },
+                    { value: 'status', label: 'Status acceleration', sublabel: 'Reaching next tier' },
+                    { value: 'sharing', label: 'Sharing benefits', sublabel: 'Gifting status to others' }
+                ]
+            }
+        ];
+
+        // ============ COMPONENTS ============
+        const DeltaLogo = () => (
+            <svg viewBox="0 0 100 100" fill="none">
+                <polygon points="50,5 95,95 5,95" fill="white"/>
+                <polygon points="50,25 75,75 25,75" fill="#C01933"/>
+            </svg>
+        );
+
+        const ChevronDown = () => (
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        );
+
+        const ArrowRight = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        );
+
+        const ArrowLeft = () => (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        );
+
+        // Header Component
+        const Header = () => (
+            <header className="header">
+                <div className="header-content">
+                    <div className="logo">
+                        <div className="delta-widget">
+                            <DeltaLogo />
+                        </div>
+                        <div>
+                            <div className="logo-text">Delta Choice Benefits Advisor</div>
+                            <div className="logo-subtext">A Project by Spencer X Smith</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        );
+
+        // Progress Component
+        const Progress = ({ currentStep, totalSteps }) => {
+            const steps = ['Status', 'Profile', 'Priorities', 'Results'];
+            const progress = ((currentStep) / totalSteps) * 100;
+            
+            return (
+                <div className="progress-container">
+                    <div className="progress-inner">
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{ width: `${progress}%` }} />
+                        </div>
+                        <div className="progress-steps">
+                            {steps.map((step, i) => (
+                                <span 
+                                    key={step} 
+                                    className={`progress-step ${i < Math.floor(currentStep / 3) ? 'completed' : ''} ${i === Math.floor(currentStep / 3) ? 'active' : ''}`}
+                                >
+                                    {step}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Welcome Screen
+        const WelcomeScreen = ({ onStart }) => (
+            <div className="welcome-screen animate-in">
+                <div className="welcome-icon">
+                    <DeltaLogo />
+                </div>
+                <h1 className="welcome-title">Find Your Best Choice Benefits</h1>
+                <p className="welcome-subtitle">
+                    Answer a few questions about your travel style, and we'll recommend the most valuable 
+                    Choice Benefits for your 2025 or 2026 Medallion status.
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <button className="btn btn-primary" onClick={onStart}>
+                        Get Started <ArrowRight />
+                    </button>
+                </div>
+            </div>
+        );
+
+        // Single Select Question
+        const SingleSelect = ({ question, value, onChange }) => (
+            <div className="options-grid">
+                {question.options.map(option => (
+                    <button
+                        key={option.value}
+                        className={`option-btn ${value === option.value ? 'selected' : ''}`}
+                        onClick={() => onChange(option.value)}
+                    >
+                        <div className="option-radio" />
+                        <div className="option-content">
+                            <div className="option-label">{option.label}</div>
+                            {option.sublabel && <div className="option-sublabel">{option.sublabel}</div>}
+                        </div>
+                    </button>
+                ))}
+            </div>
+        );
+
+        // Multi Select Question
+        const MultiSelect = ({ question, value = [], onChange }) => {
+            const toggleOption = (optionValue) => {
+                if (value.includes(optionValue)) {
+                    onChange(value.filter(v => v !== optionValue));
+                } else if (value.length < question.maxSelections) {
+                    onChange([...value, optionValue]);
+                }
+            };
+
+            return (
+                <div className="checkbox-grid two-col">
+                    {question.options.map(option => (
+                        <button
+                            key={option.value}
+                            className={`checkbox-btn ${value.includes(option.value) ? 'selected' : ''}`}
+                            onClick={() => toggleOption(option.value)}
+                        >
+                            <div className="checkbox-box" />
+                            <div className="option-content">
+                                <div className="option-label">{option.label}</div>
+                                {option.sublabel && <div className="option-sublabel">{option.sublabel}</div>}
+                            </div>
+                        </button>
+                    ))}
+                </div>
+            );
+        };
+
+        // Slider Question
+        const SliderQuestion = ({ question, value, onChange }) => {
+            const displayValue = value || question.defaultValue;
+            
+            return (
+                <div className="slider-container">
+                    <input
+                        type="range"
+                        className="slider-input"
+                        min={question.min}
+                        max={question.max}
+                        step={question.step}
+                        value={displayValue}
+                        onChange={(e) => onChange(parseInt(e.target.value))}
+                    />
+                    <div className="slider-labels">
+                        <span>{question.min}</span>
+                        <span>{question.max}+</span>
+                    </div>
+                    <div className="slider-value">{displayValue} flights</div>
+                </div>
+            );
+        };
+
+        // Question Component
+        const Question = ({ question, questionIndex, value, onChange }) => (
+            <div className="card animate-in" key={question.id}>
+                <div className="question-header">
+                    <span className="question-number">{questionIndex + 1}</span>
+                    <span className="question-text">{question.text}</span>
+                </div>
+                {question.help && <p className="question-help">{question.help}</p>}
+                
+                {question.type === 'single' && (
+                    <SingleSelect question={question} value={value} onChange={onChange} />
+                )}
+                {question.type === 'multi' && (
+                    <MultiSelect question={question} value={value} onChange={onChange} />
+                )}
+                {question.type === 'slider' && (
+                    <SliderQuestion question={question} value={value} onChange={onChange} />
+                )}
+            </div>
+        );
+
+        // Confetti Component
+        const Confetti = ({ show }) => {
+            if (!show) return null;
+            
+            const colors = ['#C01933', '#003366', '#FFD700', '#00d2ff', '#764ba2'];
+            const confettiPieces = Array.from({ length: 50 }, (_, i) => ({
+                id: i,
+                left: Math.random() * 100,
+                delay: Math.random() * 0.5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                size: Math.random() * 8 + 6
+            }));
+
+            return (
+                <div className="confetti-container">
+                    {confettiPieces.map(piece => (
+                        <div
+                            key={piece.id}
+                            className="confetti"
+                            style={{
+                                left: `${piece.left}%`,
+                                animationDelay: `${piece.delay}s`,
+                                backgroundColor: piece.color,
+                                width: piece.size,
+                                height: piece.size,
+                                borderRadius: Math.random() > 0.5 ? '50%' : '2px'
+                            }}
+                        />
+                    ))}
+                </div>
+            );
+        };
+
+        // Countdown Component
+        const CountdownBanner = ({ year }) => {
+            const deadlineYear = parseInt(year) + 1;
+            const deadline = new Date(`${deadlineYear}-01-31T23:59:59`);
+            const now = new Date();
+            const daysLeft = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
+            
+            const generateICS = () => {
+                const event = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Delta Choice Benefits Advisor//EN
+BEGIN:VEVENT
+DTSTART:${deadlineYear}0131T090000
+DTEND:${deadlineYear}0131T100000
+SUMMARY:Delta Choice Benefits Selection Deadline
+DESCRIPTION:Last day to select your ${year} Medallion Year Choice Benefits! Open the Fly Delta app to make your selections.
+LOCATION:Fly Delta App
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
+                
+                const blob = new Blob([event], { type: 'text/calendar' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `delta-choice-benefits-deadline-${year}.ics`;
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+
+            const urgencyLevel = daysLeft <= 7 ? 'critical' : daysLeft <= 30 ? 'warning' : 'normal';
+
+            return (
+                <div className="countdown-banner" style={urgencyLevel === 'critical' ? { animation: 'pulse 2s infinite' } : {}}>
+                    <div className="countdown-left">
+                        <span className="countdown-icon">⏰</span>
+                        <div>
+                            <div className="countdown-days">
+                                {daysLeft > 0 ? `${daysLeft} days left` : 'Deadline passed!'}
+                            </div>
+                            <div className="countdown-text">
+                                to select your {year} Choice Benefits (Jan 31, {deadlineYear})
+                            </div>
+                        </div>
+                    </div>
+                    <button className="countdown-btn" onClick={generateICS}>
+                        📅 Add to Calendar
+                    </button>
+                </div>
+            );
+        };
+
+        // Share Component
+        const ShareSection = ({ answers, recommendations, totalValue }) => {
+            const [copied, setCopied] = useState(false);
+            
+            const status = answers.status.charAt(0).toUpperCase() + answers.status.slice(1);
+            const year = answers.year;
+            const topPicks = recommendations.slice(0, answers.status === 'diamond' ? 3 : 1);
+            const pickNames = topPicks.map(b => b.name.replace(/^\d+,?\d*\s*/, '').replace('Bonus SkyMiles', 'Bonus Miles')).join(' + ');
+            
+            const shareText = `My optimal ${year} ${status} Choice Benefits picks: ${pickNames} = ~$${totalValue.toLocaleString()} estimated value. What are you choosing? ✈️💎
+
+Find your best picks: spencerxsmith.com/delta-choice-benefits`;
+
+            const twitterText = encodeURIComponent(`My optimal ${year} Delta ${status} Choice Benefits: ${pickNames} = ~$${totalValue.toLocaleString()} value ✈️💎
+
+Find yours: spencerxsmith.com/delta-choice-benefits`);
+            
+            const redditText = encodeURIComponent(`[Tool] Delta Choice Benefits Advisor - Found my optimal ${year} ${status} picks worth ~$${totalValue.toLocaleString()}`);
+
+            const handleCopy = async () => {
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                } catch (err) {
+                    // Fallback
+                    const textArea = document.createElement('textarea');
+                    textArea.value = shareText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                }
+            };
+
+            return (
+                <div className="share-section">
+                    <div className="share-header">
+                        <span className="share-title">📤 Share Your Results</span>
+                    </div>
+                    <div className="share-preview">
+                        {shareText.split('\n')[0]}
+                    </div>
+                    <div className="share-buttons">
+                        <button className="share-btn copy" onClick={handleCopy}>
+                            📋 Copy Text
+                        </button>
+                        <a 
+                            href={`https://twitter.com/intent/tweet?text=${twitterText}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-btn twitter"
+                        >
+                            𝕏 Post
+                        </a>
+                        <a 
+                            href={`https://www.reddit.com/r/delta/submit?selftext=true&title=${redditText}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-btn reddit"
+                        >
+                            Reddit
+                        </a>
+                    </div>
+                    {copied && <div className="copied-toast">✓ Copied to clipboard!</div>}
+                </div>
+            );
+        };
+
+        // What-If Toggles Component
+        const WhatIfToggles = ({ scenarios, onToggle }) => {
+            return (
+                <div className="whatif-section">
+                    <div className="whatif-header">
+                        <span style={{ fontSize: '1.25rem' }}>🔮</span>
+                        <span className="whatif-title">What If Scenarios</span>
+                    </div>
+                    <p className="whatif-subtitle">Toggle these to instantly see how your rankings would change</p>
+                    <div className="whatif-toggles">
+                        {scenarios.map(scenario => (
+                            <div 
+                                key={scenario.id} 
+                                className={`whatif-toggle ${scenario.active ? 'active' : ''}`}
+                            >
+                                <div>
+                                    <div className="whatif-label">{scenario.label}</div>
+                                    {scenario.active && scenario.impact && (
+                                        <div className="whatif-impact">{scenario.impact}</div>
+                                    )}
+                                </div>
+                                <div 
+                                    className={`toggle-switch ${scenario.active ? 'active' : ''}`}
+                                    onClick={() => onToggle(scenario.id)}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // Comparison Mode Component
+        const ComparisonMode = ({ benefits, status }) => {
+            const [selectedBenefits, setSelectedBenefits] = useState([]);
+            const [expanded, setExpanded] = useState(false);
+            const maxSelections = 3;
+
+            const toggleBenefit = (benefitId) => {
+                if (selectedBenefits.includes(benefitId)) {
+                    setSelectedBenefits(prev => prev.filter(id => id !== benefitId));
+                } else if (selectedBenefits.length < maxSelections) {
+                    setSelectedBenefits(prev => [...prev, benefitId]);
+                }
+            };
+
+            const selectedData = benefits.filter(b => selectedBenefits.includes(b.id));
+
+            const comparisonAttributes = [
+                { key: 'dollarValue', label: 'Base Value', format: (v) => `$${v.toLocaleString()}` },
+                { key: 'score', label: 'Your Score', format: (v) => `${v} pts` },
+                { key: 'category', label: 'Category', format: (v) => v.charAt(0).toUpperCase() + v.slice(1) },
+                { key: 'expiration', label: 'Expiration', format: (v, b) => {
+                    if (b.id.includes('upgrade') || b.id.includes('sky_club') || b.id.includes('gift')) return 'End of Medallion Year';
+                    if (b.id.includes('miles') || b.id.includes('mqd') || b.id.includes('amex')) return 'No expiration';
+                    if (b.id.includes('starbucks')) return '6 months';
+                    return '12 months from selection';
+                }},
+                { key: 'transferable', label: 'Transferable?', format: (v, b) => {
+                    if (b.id.includes('gift') || b.id.includes('miles')) return 'Yes';
+                    return 'No';
+                }},
+                { key: 'requiresAmex', label: 'Requires Amex?', format: (v) => v ? 'Yes (Platinum/Reserve)' : 'No' },
+            ];
+
+            const getWinner = (attr, data) => {
+                if (data.length < 2) return null;
+                if (attr.key === 'dollarValue' || attr.key === 'score') {
+                    const max = Math.max(...data.map(b => b[attr.key]));
+                    return data.find(b => b[attr.key] === max)?.id;
+                }
+                return null;
+            };
+
+            return (
+                <div className="comparison-section">
+                    <div className="comparison-header" onClick={() => setExpanded(!expanded)} style={{ cursor: 'pointer' }}>
+                        <span className="comparison-title">
+                            <span>⚖️</span> Compare Benefits Side-by-Side
+                        </span>
+                        <div className={`expand-icon ${expanded ? 'expanded' : ''}`}>
+                            <ChevronDown />
+                        </div>
+                    </div>
+
+                    {expanded && (
+                        <>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
+                                Select up to 3 benefits to compare details
+                            </p>
+                            
+                            <div className="comparison-selector">
+                                {benefits.slice(0, 8).map(benefit => (
+                                    <button
+                                        key={benefit.id}
+                                        className={`comparison-chip ${selectedBenefits.includes(benefit.id) ? 'selected' : ''} ${selectedBenefits.length >= maxSelections && !selectedBenefits.includes(benefit.id) ? 'disabled' : ''}`}
+                                        onClick={() => toggleBenefit(benefit.id)}
+                                        disabled={selectedBenefits.length >= maxSelections && !selectedBenefits.includes(benefit.id)}
+                                    >
+                                        {benefit.name.replace(/^\d+,?\d*\s*/, '').substring(0, 25)}{benefit.name.length > 25 ? '...' : ''}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {selectedData.length >= 2 && (
+                                <table className="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            {selectedData.map(b => (
+                                                <th key={b.id}>{b.name.replace(/^\d+,?\d*\s*/, '').substring(0, 20)}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {comparisonAttributes.map(attr => {
+                                            const winner = getWinner(attr, selectedData);
+                                            return (
+                                                <tr key={attr.key}>
+                                                    <td className="attr-name">{attr.label}</td>
+                                                    {selectedData.map(b => (
+                                                        <td key={b.id} className={winner === b.id ? 'comparison-winner' : ''}>
+                                                            {attr.format(b[attr.key], b)}
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            )}
+
+                            {selectedData.length < 2 && (
+                                <p style={{ fontSize: '0.85rem', color: 'var(--gray-400)', textAlign: 'center', padding: '1rem' }}>
+                                    Select at least 2 benefits to see comparison
+                                </p>
+                            )}
+                        </>
+                    )}
+                </div>
+            );
+        };
+
+        // Selection Tracker Component
+        const SelectionTracker = ({ benefits, status, year }) => {
+            const storageKey = `delta-tracker-${year}-${status}`;
+            const maxSelections = status === 'diamond' ? 3 : 1;
+            
+            const [checkedItems, setCheckedItems] = useState(() => {
+                try {
+                    const saved = localStorage.getItem(storageKey);
+                    return saved ? JSON.parse(saved) : [];
+                } catch {
+                    return [];
+                }
+            });
+
+            useEffect(() => {
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(checkedItems));
+                } catch (e) {
+                    console.warn('Could not save to localStorage');
+                }
+            }, [checkedItems, storageKey]);
+
+            const toggleItem = (benefitId) => {
+                setCheckedItems(prev => {
+                    if (prev.includes(benefitId)) {
+                        return prev.filter(id => id !== benefitId);
+                    } else if (prev.length < maxSelections) {
+                        return [...prev, benefitId];
+                    }
+                    return prev;
+                });
+            };
+
+            const clearAll = () => {
+                setCheckedItems([]);
+            };
+
+            const topBenefits = benefits.slice(0, 5);
+            const progress = (checkedItems.length / maxSelections) * 100;
+
+            return (
+                <div className="tracker-section">
+                    <div className="tracker-header">
+                        <span className="tracker-title">
+                            <span>✅</span> Your Selection Tracker
+                        </span>
+                        <div className="tracker-progress">
+                            <div className="tracker-progress-bar">
+                                <div className="tracker-progress-fill" style={{ width: `${progress}%` }} />
+                            </div>
+                            <span className="tracker-progress-text">{checkedItems.length}/{maxSelections}</span>
+                        </div>
+                    </div>
+                    
+                    <p style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
+                        Track what you've selected in the Fly Delta app. Your selections are saved automatically.
+                    </p>
+
+                    <div className="tracker-items">
+                        {topBenefits.map(benefit => (
+                            <div 
+                                key={benefit.id}
+                                className={`tracker-item ${checkedItems.includes(benefit.id) ? 'checked' : ''}`}
+                                onClick={() => toggleItem(benefit.id)}
+                            >
+                                <div className="tracker-checkbox" />
+                                <div className="tracker-item-content">
+                                    <div className="tracker-item-name">{benefit.name}</div>
+                                    <div className="tracker-item-value">${benefit.dollarValue.toLocaleString()} value</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {checkedItems.length > 0 && (
+                        <div style={{ textAlign: 'right', marginTop: '0.75rem' }}>
+                            <button className="tracker-clear" onClick={clearAll}>Clear selections</button>
+                        </div>
+                    )}
+
+                    {checkedItems.length === maxSelections && (
+                        <div style={{ 
+                            marginTop: '1rem', 
+                            padding: '0.75rem', 
+                            background: 'rgba(5, 150, 105, 0.1)', 
+                            borderRadius: '8px',
+                            textAlign: 'center',
+                            fontSize: '0.9rem',
+                            color: '#059669',
+                            fontWeight: 500
+                        }}>
+                            🎉 All {maxSelections} selections tracked! Don't forget to confirm in the Fly Delta app.
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Historical Context Component
+        const HistoricalContext = () => {
+            const [expanded, setExpanded] = useState(false);
+
+            const historyData = [
+                {
+                    year: '2026',
+                    label: '2026 (Feb 1+)',
+                    changes: [
+                        { text: 'Amex credit: Diamond $700→$500, Platinum $400→$250', type: 'decrease' },
+                        { text: 'Travel voucher: Diamond $350→$550, Platinum $300→$350', type: 'increase' },
+                        { text: 'Bonus miles: Diamond 35K→40K, Platinum 30K→35K', type: 'increase' },
+                        { text: 'Gift status: Now 4 people instead of 2', type: 'increase' },
+                        { text: 'Delta Vacations: Now requires 4-night minimum', type: 'decrease' },
+                    ]
+                },
+                {
+                    year: '2025',
+                    label: '2025',
+                    changes: [
+                        { text: 'Wheels Up private flight credit added ($1,500-$2,000)', type: 'increase' },
+                        { text: 'Amex credit increased: Diamond $500→$700, Platinum $200→$400', type: 'increase' },
+                        { text: 'Choice Benefits selection moves to Fly Delta app only (June)', type: 'neutral' },
+                    ]
+                },
+                {
+                    year: '2024',
+                    label: '2024',
+                    changes: [
+                        { text: 'Starbucks Stars option added (6,000 stars)', type: 'neutral' },
+                        { text: 'SAF contribution option introduced', type: 'neutral' },
+                        { text: 'MQD accelerator amounts established', type: 'neutral' },
+                    ]
+                },
+                {
+                    year: '2023',
+                    label: '2023 & Earlier',
+                    changes: [
+                        { text: 'Sky Club membership options added for Diamond', type: 'increase' },
+                        { text: 'Global/Regional upgrade certificate system introduced', type: 'neutral' },
+                        { text: 'Original Choice Benefits program launched', type: 'neutral' },
+                    ]
+                }
+            ];
+
+            return (
+                <div className="history-section">
+                    <div className="history-header" onClick={() => setExpanded(!expanded)}>
+                        <span style={{ fontSize: '1.25rem' }}>📜</span>
+                        <span className="history-title">How Benefits Have Changed Over Time</span>
+                        <div className={`expand-icon ${expanded ? 'expanded' : ''}`} style={{ marginLeft: 'auto' }}>
+                            <ChevronDown />
+                        </div>
+                    </div>
+
+                    {expanded && (
+                        <div className="history-timeline">
+                            {historyData.map(yearData => (
+                                <div key={yearData.year} className="history-year">
+                                    <div className="history-year-label">{yearData.label}</div>
+                                    <div className="history-changes">
+                                        {yearData.changes.map((change, i) => (
+                                            <div key={i} className={`history-change ${change.type}`}>
+                                                <span>
+                                                    {change.type === 'increase' ? '📈' : change.type === 'decrease' ? '📉' : '•'}
+                                                </span>
+                                                <span>{change.text}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Print Summary Component
+        const PrintButton = ({ answers, recommendations, totalValue, year }) => {
+            const handlePrint = () => {
+                window.print();
+            };
+
+            return (
+                <button className="print-btn" onClick={handlePrint}>
+                    🖨️ Print Summary
+                </button>
+            );
+        };
+
+        const PrintHeader = ({ year, status }) => (
+            <div className="print-header">
+                <h1>Delta Choice Benefits - Personal Recommendation</h1>
+                <p>{year} Medallion Year • {status.charAt(0).toUpperCase() + status.slice(1)} Status • Generated {new Date().toLocaleDateString()}</p>
+                <p style={{ marginTop: '0.5rem', fontSize: '9pt' }}>A Project by Spencer X Smith • spencerxsmith.com</p>
+            </div>
+        );
+
+        const PrintSummary = ({ answers, recommendations, totalValue }) => {
+            const status = answers.status;
+            const maxSelections = status === 'diamond' ? 3 : 1;
+            const topPicks = recommendations.slice(0, maxSelections);
+
+            return (
+                <div className="print-summary">
+                    <h3>Quick Reference</h3>
+                    <ul>
+                        <li><strong>Status:</strong> {status.charAt(0).toUpperCase() + status.slice(1)} Medallion ({maxSelections} selection{maxSelections > 1 ? 's' : ''})</li>
+                        <li><strong>Recommended picks:</strong> {topPicks.map(b => b.name).join(', ')}</li>
+                        <li><strong>Estimated total value:</strong> ${totalValue.toLocaleString()}</li>
+                        <li><strong>Selection deadline:</strong> January 31, {parseInt(answers.year) + 1}</li>
+                        <li><strong>How to select:</strong> Fly Delta app → SkyMiles → Choice Benefits</li>
+                    </ul>
+                </div>
+            );
+        };
+
+        // Methodology Component
+        const Methodology = ({ expanded, onToggle }) => (
+            <div className="card" style={{ marginTop: '1rem' }}>
+                <div className="expandable-header" onClick={onToggle}>
+                    <div>
+                        <h3 className="card-title" style={{ marginBottom: 0 }}>📊 How We Calculate Scores</h3>
+                        <p className="card-description" style={{ marginTop: '0.25rem' }}>Understanding the methodology</p>
+                    </div>
+                    <div className={`expand-icon ${expanded ? 'expanded' : ''}`}>
+                        <ChevronDown />
+                    </div>
+                </div>
+                
+                {expanded && (
+                    <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--gray-700)' }}>
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 1: Base Dollar Value</h4>
+                            <p>Each benefit starts with an estimated dollar value based on face value or market rates:</p>
+                            <ul style={{ marginTop: '0.5rem', marginLeft: '1.25rem', lineHeight: '1.8' }}>
+                                <li><strong>Statement Credits & Vouchers:</strong> Face value (e.g., $700 credit = 700 points)</li>
+                                <li><strong>SkyMiles:</strong> Valued at ~1.2¢ each (30,000 miles = 360 points)</li>
+                                <li><strong>Upgrade Certificates:</strong> $100-500 per certificate depending on type</li>
+                                <li><strong>Sky Club Membership:</strong> Based on retail membership pricing</li>
+                                <li><strong>MQD Accelerator:</strong> Dollar-for-dollar if you need them for status</li>
+                            </ul>
+                        </div>
+                        
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 2: Profile Multipliers</h4>
+                            <p>Your answers adjust scores up or down:</p>
+                            <ul style={{ marginTop: '0.5rem', marginLeft: '1.25rem', lineHeight: '1.8' }}>
+                                <li><strong>No eligible Amex card:</strong> Statement credit → 0 points (ineligible)</li>
+                                <li><strong>Book Basic Economy:</strong> Upgrade certificates → 0 points (can't use them)</li>
+                                <li><strong>Already have lounge access:</strong> Sky Club membership → 0 points</li>
+                                <li><strong>Domestic-only traveler:</strong> Global upgrades reduced by 60%</li>
+                                <li><strong>Pushing for next status tier:</strong> MQD value doubled</li>
+                                <li><strong>Travel with family:</strong> Gift status value increased by 50%</li>
+                                <li><strong>High flight volume:</strong> Upgrade cert value scales up (more chances to use)</li>
+                            </ul>
+                        </div>
+                        
+                        <div style={{ marginBottom: '1rem' }}>
+                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 3: Priority Boost</h4>
+                            <p>Benefits matching your stated priorities get a 20-30% score boost to reflect personal preference beyond pure dollar value.</p>
+                        </div>
+                        
+                        <div style={{ background: 'var(--gray-100)', padding: '1rem', borderRadius: '8px', marginTop: '1rem' }}>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--gray-600)' }}>
+                                <strong>Note:</strong> Points are relative rankings, not exact dollar amounts. A score of 700 vs 400 means the first option is ~75% more valuable <em>for your specific situation</em>. Your actual value may vary based on how you use the benefits.
+                            </p>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+
+        // Recommendation Card
+        const RecommendationCard = ({ benefit, rank, score, reasons, expanded, onToggle }) => {
+            const getRankClass = () => {
+                if (rank === 1) return 'rank-1';
+                if (rank === 2) return 'rank-2';
+                if (rank === 3) return 'rank-3';
+                return 'rank-other';
+            };
+
+            return (
+                <div className="recommendation-card animate-in">
+                    <div className="recommendation-rank" onClick={onToggle} style={{ cursor: 'pointer' }}>
+                        <div className={`rank-badge ${getRankClass()}`}>#{rank}</div>
+                        <div className="recommendation-content">
+                            <div className="recommendation-name">{benefit.name}</div>
+                            <div className="recommendation-value">
+                                {benefit.changed === 'increased' && '📈 '}
+                                {benefit.changed === 'decreased' && '📉 '}
+                                {benefit.description}
+                            </div>
+                        </div>
+                        <div className="recommendation-score">
+                            <div className="score-number">{score}</div>
+                            <div className="score-label">points</div>
+                        </div>
+                    </div>
+                    
+                    {expanded && (
+                        <div className="recommendation-details">
+                            <div className="detail-row">
+                                <span className="detail-label">Base Dollar Value</span>
+                                <span className="detail-value">${benefit.dollarValue.toLocaleString()}</span>
+                            </div>
+                            {benefit.cost && (
+                                <div className="detail-row">
+                                    <span className="detail-label">Selection Cost</span>
+                                    <span className="detail-value">{benefit.cost} of 3 choices</span>
+                                </div>
+                            )}
+                            {benefit.requiresAmex && (
+                                <div className="detail-row">
+                                    <span className="detail-label">Requires</span>
+                                    <span className="detail-value">Eligible Delta Amex Card</span>
+                                </div>
+                            )}
+                            <div className="why-box">
+                                <div className="why-title">Why This Ranks Here For You</div>
+                                <div className="why-text">{reasons}</div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // Results Component
+        const Results = ({ answers, onRestart }) => {
+            const [selectedYear, setSelectedYear] = useState(answers.year);
+            const [expandedCard, setExpandedCard] = useState(1);
+            const [showMethodology, setShowMethodology] = useState(false);
+            const [showConfetti, setShowConfetti] = useState(true);
+            const [whatIfScenarios, setWhatIfScenarios] = useState([
+                { 
+                    id: 'reserve_card', 
+                    label: 'What if I had a Reserve card?', 
+                    active: false,
+                    applies: answers.hasAmex === 'none' || answers.hasAmex === 'gold',
+                    impact: '→ Amex credits become available'
+                },
+                { 
+                    id: 'status_push', 
+                    label: 'What if I\'m pushing for next tier?', 
+                    active: false,
+                    applies: answers.statusGoal !== 'stretch',
+                    impact: '→ MQD Accelerator value doubles'
+                },
+                { 
+                    id: 'more_international', 
+                    label: 'What if I fly more internationally?', 
+                    active: false,
+                    applies: answers.travelStyle === 'domestic',
+                    impact: '→ Global upgrades become more valuable'
+                },
+                { 
+                    id: 'travel_companions', 
+                    label: 'What if family members traveled more?', 
+                    active: false,
+                    applies: answers.travelCompanions !== 'family',
+                    impact: '→ Gift status value increases 50%'
+                }
+            ].filter(s => s.applies));
+
+            // Hide confetti after animation
+            useEffect(() => {
+                const timer = setTimeout(() => setShowConfetti(false), 3000);
+                return () => clearTimeout(timer);
+            }, []);
+
+            const toggleScenario = (id) => {
+                setWhatIfScenarios(prev => 
+                    prev.map(s => s.id === id ? { ...s, active: !s.active } : s)
+                );
+            };
+
+            // Build modified answers based on what-if scenarios
+            const getModifiedAnswers = () => {
+                let modified = { ...answers };
+                
+                whatIfScenarios.forEach(scenario => {
+                    if (scenario.active) {
+                        switch (scenario.id) {
+                            case 'reserve_card':
+                                modified.hasAmex = 'reserve';
+                                break;
+                            case 'status_push':
+                                modified.statusGoal = 'stretch';
+                                break;
+                            case 'more_international':
+                                modified.travelStyle = 'international';
+                                break;
+                            case 'travel_companions':
+                                modified.travelCompanions = 'family';
+                                break;
+                        }
+                    }
+                });
+                
+                return modified;
+            };
+
+            const calculateScores = (year, answersToUse) => {
+                const status = answersToUse.status;
+                const benefitsData = BENEFITS_DATA[year][status];
+                const benefits = benefitsData.benefits;
+                
+                return benefits.map(benefit => {
+                    let score = benefit.dollarValue;
+                    let reasons = [];
+
+                    // Amex eligibility
+                    if (benefit.requiresAmex) {
+                        if (answersToUse.hasAmex === 'none' || answersToUse.hasAmex === 'gold') {
+                            score = 0;
+                            reasons.push('You need an eligible Delta Amex card (Platinum, Reserve, or Business versions) for this benefit.');
+                        } else {
+                            reasons.push(`Great value - this credit more than covers your ${answersToUse.hasAmex === 'reserve' ? 'Reserve' : 'Platinum'} card annual fee.`);
+                        }
+                    }
+
+                    // Upgrade certificates
+                    if (benefit.category === 'upgrades') {
+                        if (answersToUse.cabinPreference === 'basic') {
+                            score = 0;
+                            reasons.push('Basic Economy fares cannot use upgrade certificates.');
+                        } else if (answersToUse.cabinPreference === 'premium') {
+                            score *= 0.3;
+                            reasons.push('You already book premium cabins, so upgrade value is lower.');
+                        } else {
+                            if (benefit.id.includes('global') && answersToUse.travelStyle === 'domestic') {
+                                score *= 0.4;
+                                reasons.push('Global certificates are less valuable for primarily domestic travelers.');
+                            } else if (benefit.id.includes('regional') && answersToUse.travelStyle === 'international') {
+                                score *= 0.6;
+                                reasons.push('Regional certificates only work on domestic routes.');
+                            } else {
+                                reasons.push('Upgrade certificates can provide excellent value on your typical routes.');
+                            }
+                            
+                            const flightsBonus = Math.min(answersToUse.flightsPerYear / 50, 1.5);
+                            score *= flightsBonus;
+                            if (answersToUse.flightsPerYear > 30) {
+                                reasons.push(`With ${answersToUse.flightsPerYear} flights/year, you have plenty of opportunities to use these.`);
+                            }
+                        }
+                    }
+
+                    // MQD Accelerator
+                    if (benefit.category === 'status') {
+                        if (answersToUse.statusGoal === 'stretch') {
+                            score *= 2;
+                            reasons.push('Since you\'re pushing for higher status, every MQD helps significantly.');
+                        } else if (answersToUse.statusGoal === 'maintain') {
+                            score *= 0.3;
+                            reasons.push('If you\'re comfortably maintaining status, MQDs have limited value.');
+                        } else {
+                            reasons.push('MQD value depends on whether you end up needing them for status.');
+                        }
+                    }
+
+                    // Sky Club
+                    if (benefit.category === 'lounge') {
+                        if (answersToUse.loungeAccess === 'reserve' || answersToUse.loungeAccess === 'membership') {
+                            score = 0;
+                            reasons.push('You already have unlimited Sky Club access.');
+                        } else if (answersToUse.loungeAccess === 'none') {
+                            score *= 0.3;
+                            reasons.push('Since you don\'t typically use Sky Clubs, this may not be your best value.');
+                        } else {
+                            reasons.push('Could provide good value if you frequently visit Sky Clubs.');
+                        }
+                    }
+
+                    // Gift Status
+                    if (benefit.category === 'gifting') {
+                        if (answersToUse.travelCompanions === 'family') {
+                            score *= 1.5;
+                            reasons.push('With multiple family members traveling, gifted status multiplies in value.');
+                        } else if (answersToUse.travelCompanions === 'solo') {
+                            score *= 0.3;
+                            reasons.push('Solo travelers get less value from gifting status.');
+                        } else {
+                            reasons.push('Can be valuable if you have someone specific who would use the benefits.');
+                        }
+                    }
+
+                    // Miles
+                    if (benefit.category === 'miles') {
+                        if (answersToUse.priorities?.includes('miles')) {
+                            score *= 1.3;
+                            reasons.push('Miles align with your stated priorities.');
+                        }
+                        reasons.push('Safe choice - miles never expire and can be worth more than 1.2¢ each.');
+                    }
+
+                    // Priority bonuses
+                    if (answersToUse.priorities?.includes('cash') && (benefit.category === 'cash' || benefit.category === 'travel')) {
+                        score *= 1.2;
+                    }
+                    if (answersToUse.priorities?.includes('upgrades') && benefit.category === 'upgrades') {
+                        score *= 1.3;
+                    }
+                    if (answersToUse.priorities?.includes('lounge') && benefit.category === 'lounge') {
+                        score *= 1.3;
+                    }
+                    if (answersToUse.priorities?.includes('status') && benefit.category === 'status') {
+                        score *= 1.3;
+                    }
+                    if (answersToUse.priorities?.includes('sharing') && benefit.category === 'gifting') {
+                        score *= 1.3;
+                    }
+
+                    // Wheels Up - very specific use case
+                    if (benefit.id === 'wheels_up') {
+                        score *= 0.1; // Most people won't use private aviation
+                        reasons.push('Only valuable if you actually book Wheels Up private flights.');
+                    }
+
+                    // SAF - charitable
+                    if (benefit.id === 'saf') {
+                        score = 50; // Minimal personal value
+                        reasons.push('This is a donation to support sustainable aviation - no direct personal value.');
+                    }
+
+                    // Starbucks
+                    if (benefit.id === 'starbucks') {
+                        reasons.push('Stars expire in 6 months and have faced devaluations - generally not recommended.');
+                    }
+
+                    return {
+                        ...benefit,
+                        score: Math.round(score),
+                        reasons: reasons.join(' ')
+                    };
+                }).sort((a, b) => b.score - a.score);
+            };
+
+            const modifiedAnswers = getModifiedAnswers();
+            const rankedBenefits = calculateScores(selectedYear, modifiedAnswers);
+            const benefitsData = BENEFITS_DATA[selectedYear][answers.status];
+            const topBenefits = rankedBenefits.slice(0, 5);
+
+            // Calculate recommended total value
+            const recommendedValue = rankedBenefits
+                .slice(0, benefitsData.selections)
+                .reduce((sum, b) => sum + b.dollarValue, 0);
+
+            return (
+                <div className="animate-in">
+                    <Confetti show={showConfetti} />
+                    <PrintHeader year={selectedYear} status={answers.status} />
+                    
+                    <div className="results-header">
+                        <div className={`status-badge ${answers.status}`}>
+                            {answers.status === 'diamond' ? '💎' : '✨'} {answers.status.charAt(0).toUpperCase() + answers.status.slice(1)} Medallion
+                        </div>
+                        <h1 className="results-title">Your Personalized Recommendations</h1>
+                        <p className="results-subtitle">Based on your travel profile and priorities</p>
+                        <div style={{ marginTop: '1rem' }}>
+                            <PrintButton 
+                                answers={answers} 
+                                recommendations={rankedBenefits} 
+                                totalValue={recommendedValue}
+                                year={selectedYear}
+                            />
+                        </div>
+                    </div>
+
+                    <CountdownBanner year={selectedYear} />
+
+                    <div className="year-toggle">
+                        <button 
+                            className={`year-btn ${selectedYear === '2025' ? 'active' : ''}`}
+                            onClick={() => setSelectedYear('2025')}
+                        >
+                            2025 Benefits
+                        </button>
+                        <button 
+                            className={`year-btn ${selectedYear === '2026' ? 'active' : ''}`}
+                            onClick={() => setSelectedYear('2026')}
+                        >
+                            2026 Benefits
+                        </button>
+                    </div>
+
+                    {whatIfScenarios.length > 0 && (
+                        <WhatIfToggles 
+                            scenarios={whatIfScenarios} 
+                            onToggle={toggleScenario} 
+                        />
+                    )}
+
+                    <div className="summary-box">
+                        <div className="summary-title">Your Optimal Selection ({benefitsData.selections} {benefitsData.selections === 1 ? 'choice' : 'choices'})</div>
+                        <div className="summary-content">
+                            {rankedBenefits.slice(0, benefitsData.selections).map(b => b.name).join(' + ')}
+                        </div>
+                        <div className="summary-grid">
+                            <div className="summary-item">
+                                <div className="summary-item-label">Estimated Value</div>
+                                <div className="summary-item-value">${recommendedValue.toLocaleString()}</div>
+                            </div>
+                            <div className="summary-item">
+                                <div className="summary-item-label">Selection Deadline</div>
+                                <div className="summary-item-value">Jan 31, {parseInt(selectedYear) + 1}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <SelectionTracker 
+                        benefits={rankedBenefits} 
+                        status={answers.status} 
+                        year={selectedYear}
+                    />
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h2 className="card-title">Ranked Benefits For You</h2>
+                            <p className="card-description">Click any card to see why it ranked where it did</p>
+                        </div>
+
+                        {topBenefits.map((benefit, index) => (
+                            <RecommendationCard
+                                key={benefit.id}
+                                benefit={benefit}
+                                rank={index + 1}
+                                score={benefit.score}
+                                reasons={benefit.reasons}
+                                expanded={expandedCard === index + 1}
+                                onToggle={() => setExpandedCard(expandedCard === index + 1 ? null : index + 1)}
+                            />
+                        ))}
+                    </div>
+
+                    <ComparisonMode benefits={rankedBenefits} status={answers.status} />
+
+                    <ShareSection 
+                        answers={answers} 
+                        recommendations={rankedBenefits} 
+                        totalValue={recommendedValue} 
+                    />
+
+                    <HistoricalContext />
+
+                    <Methodology 
+                        expanded={showMethodology} 
+                        onToggle={() => setShowMethodology(!showMethodology)} 
+                    />
+
+                    {selectedYear === '2026' && (
+                        <div className="card" style={{ background: 'rgba(192, 25, 51, 0.05)', borderLeft: '4px solid var(--delta-red)' }}>
+                            <div className="card-header">
+                                <h2 className="card-title" style={{ color: 'var(--delta-red)' }}>⚠️ 2026 Changes Note</h2>
+                            </div>
+                            <p style={{ fontSize: '0.9rem', color: 'var(--gray-700)' }}>
+                                <strong>If selecting before Feb 1, 2026:</strong> You'll receive the higher 2025 values for 
+                                Amex credits, plus bonus miles/vouchers/gifting capacity will be credited mid-February 2026 
+                                to match the new higher values. Best of both worlds!
+                            </p>
+                        </div>
+                    )}
+
+                    <PrintSummary 
+                        answers={answers} 
+                        recommendations={rankedBenefits} 
+                        totalValue={recommendedValue}
+                    />
+
+                    <div className="nav-buttons">
+                        <button className="btn btn-secondary" onClick={onRestart}>
+                            <ArrowLeft /> Start Over
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // Main App Component
+        const App = () => {
+            const [screen, setScreen] = useState('welcome'); // welcome, questions, results
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [answers, setAnswers] = useState({
+                flightsPerYear: 25
+            });
+
+            const handleStart = () => {
+                setScreen('questions');
+                setCurrentQuestion(0);
+            };
+
+            const handleAnswer = (questionId, value) => {
+                setAnswers(prev => ({ ...prev, [questionId]: value }));
+            };
+
+            const handleNext = () => {
+                if (currentQuestion < QUESTIONS.length - 1) {
+                    setCurrentQuestion(prev => prev + 1);
+                } else {
+                    setScreen('results');
+                }
+            };
+
+            const handleBack = () => {
+                if (currentQuestion > 0) {
+                    setCurrentQuestion(prev => prev - 1);
+                }
+            };
+
+            const handleRestart = () => {
+                setScreen('welcome');
+                setCurrentQuestion(0);
+                setAnswers({ flightsPerYear: 25 });
+            };
+
+            const currentQ = QUESTIONS[currentQuestion];
+            const currentAnswer = answers[currentQ?.id];
+            const canProceed = currentQ?.type === 'slider' || 
+                              (currentQ?.type === 'single' && currentAnswer) ||
+                              (currentQ?.type === 'multi' && currentAnswer?.length > 0);
+
+            return (
+                <div className="app-container">
+                    <Header />
+                    
+                    {screen === 'questions' && (
+                        <Progress currentStep={currentQuestion + 1} totalSteps={QUESTIONS.length} />
+                    )}
+
+                    <main className="main-content">
+                        {screen === 'welcome' && (
+                            <WelcomeScreen onStart={handleStart} />
+                        )}
+
+                        {screen === 'questions' && (
+                            <>
+                                <Question
+                                    question={currentQ}
+                                    questionIndex={currentQuestion}
+                                    value={currentAnswer}
+                                    onChange={(value) => handleAnswer(currentQ.id, value)}
+                                />
+
+                                <div className="nav-buttons">
+                                    {currentQuestion > 0 && (
+                                        <button className="btn btn-secondary" onClick={handleBack}>
+                                            <ArrowLeft /> Back
+                                        </button>
+                                    )}
+                                    <button 
+                                        className="btn btn-primary" 
+                                        onClick={handleNext}
+                                        disabled={!canProceed}
+                                    >
+                                        {currentQuestion === QUESTIONS.length - 1 ? 'See Recommendations' : 'Continue'} <ArrowRight />
+                                    </button>
+                                </div>
+                            </>
+                        )}
+
+                        {screen === 'results' && (
+                            <Results answers={answers} onRestart={handleRestart} />
+                        )}
+                    </main>
+
+                    <footer className="footer">
+                        <p style={{ marginBottom: '0.5rem' }}>
+                            <strong>A Project by <a href="https://spencerxsmith.com" target="_blank" rel="noopener">Spencer X Smith</a></strong>
+                        </p>
+                        <p>
+                            This is an unofficial tool created for educational purposes. 
+                            Not affiliated with Delta Air Lines, Inc.
+                        </p>
+                        <p style={{ marginTop: '0.5rem' }}>
+                            Data accurate as of January 2026. Always verify benefits at{' '}
+                            <a href="https://www.delta.com/us/en/skymiles/medallion-program/choice-benefits" target="_blank" rel="noopener">
+                                delta.com
+                            </a>
+                        </p>
+                        <p style={{ marginTop: '0.75rem', fontSize: '0.7rem', color: 'var(--gray-400)' }}>
+                            © {new Date().getFullYear()} Spencer X Smith. Free to use, not free to redistribute.
+                        </p>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
