@@ -6,31 +6,45 @@
     <title>Delta Choice Benefits Advisor | Find Your Best Medallion Perks</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free tool for Delta Platinum and Diamond Medallion members to find the most valuable Choice Benefits for their travel style. Personalized recommendations based on your profile.">
+    <meta name="description" content="Free tool for Delta Platinum and Diamond Medallion members to find the most valuable Choice Benefits. Personalized recommendations based on your travel style, credit cards, and selection timing.">
     <meta name="keywords" content="Delta Choice Benefits, SkyMiles, Medallion Status, Diamond, Platinum, Delta Air Lines, upgrade certificates, Sky Club">
     <meta name="author" content="Spencer X Smith">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tools.spencerxsmith.com/delta-choice-benefits/">
-    <meta property="og:title" content="Delta Choice Benefits Advisor">
-    <meta property="og:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
-    <meta property="og:image" content="https://tools.spencerxsmith.com/delta-choice-benefits/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://tools.spencerxsmith.com/delta-choice-benefits/">
-    <meta name="twitter:title" content="Delta Choice Benefits Advisor">
-    <meta name="twitter:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
-    <meta name="twitter:image" content="https://tools.spencerxsmith.com/delta-choice-benefits/og-image.png">
+<!-- Canonical + Social (works on GitHub Pages and custom domains) -->
+<link rel="canonical" href="" id="canonical-link">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="" id="og-url">
+<meta property="og:title" content="Delta Choice Benefits Advisor">
+<meta property="og:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="" id="twitter-url">
+<meta name="twitter:title" content="Delta Choice Benefits Advisor">
+<meta name="twitter:description" content="Free tool to find the most valuable Choice Benefits for Delta Platinum & Diamond members. Personalized recommendations in 2 minutes.">
+<meta name="twitter:image" content="og-image.png">
+
+<script>
+  // Sets canonical + share URLs to the actual deployed URL (GitHub Pages or custom domain)
+  (function () {
+    var url = window.location.href.split('#')[0];
+    var canonical = document.getElementById('canonical-link');
+    var og = document.getElementById('og-url');
+    var tw = document.getElementById('twitter-url');
+
+    if (canonical) canonical.href = url;
+    if (og) og.content = url;
+    if (tw) tw.content = url;
+  })();
+</script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,95 5,95' fill='%23003366'/><polygon points='50,25 75,75 25,75' fill='%23C01933'/></svg>">
-    
-    <!-- Privacy-friendly Analytics (Plausible) -->
-    <script defer data-domain="tools.spencerxsmith.com" src="https://plausible.io/js/script.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -1675,13 +1689,14 @@
             },
             {
                 id: 'hasAmex',
-                text: 'Do you have a Delta SkyMiles American Express Card?',
-                help: 'Statement credits require a Delta Platinum, Platinum Business, Reserve, or Reserve Business Amex.',
+                text: 'Which Delta SkyMiles American Express Card(s) do you have?',
+                help: 'Statement credits can be applied to Platinum, Platinum Business, Reserve, or Reserve Business cards. If you have multiple eligible cards, you\'ll choose which one receives the credit.',
                 type: 'single',
                 options: [
-                    { value: 'reserve', label: 'Yes - Reserve or Reserve Business', sublabel: '$695 annual fee' },
-                    { value: 'platinum', label: 'Yes - Platinum or Platinum Business', sublabel: '$350 annual fee' },
-                    { value: 'gold', label: 'Yes - Gold card only', sublabel: 'Not eligible for statement credits' },
+                    { value: 'reserve', label: 'Reserve or Reserve Business', sublabel: '$695 annual fee — credit offsets most of it' },
+                    { value: 'platinum_amex', label: 'Platinum or Platinum Business (Delta)', sublabel: '$350 annual fee — credit covers it entirely' },
+                    { value: 'multiple', label: 'Multiple eligible cards (e.g., Reserve + Platinum)', sublabel: 'You\'ll choose which card gets the credit' },
+                    { value: 'gold', label: 'Gold card only', sublabel: 'Not eligible for statement credits' },
                     { value: 'none', label: 'No Delta Amex card', sublabel: '' }
                 ]
             },
@@ -1735,10 +1750,11 @@
                 help: 'This affects whether a Sky Club membership choice is valuable.',
                 type: 'single',
                 options: [
-                    { value: 'reserve', label: 'Reserve card benefit', sublabel: 'Already have unlimited access' },
-                    { value: 'amex_plat', label: 'Amex Platinum (non-Delta)', sublabel: 'Limited visits, may have fees' },
+                    { value: 'reserve', label: 'Delta Reserve card benefit', sublabel: 'Unlimited access when flying Delta' },
+                    { value: 'amex_plat_unlimited', label: 'Amex Platinum with $75K+ annual spend', sublabel: 'Unlimited visits unlocked' },
+                    { value: 'amex_plat_limited', label: 'Amex Platinum under $75K spend', sublabel: '10 visits/year cap — may run out' },
                     { value: 'membership', label: 'Existing Sky Club membership', sublabel: 'Already a member' },
-                    { value: 'day_pass', label: 'Day passes when needed', sublabel: 'Pay per visit' },
+                    { value: 'day_pass', label: 'Day passes when needed', sublabel: 'Pay $50-75 per visit' },
                     { value: 'none', label: 'Don\'t use Sky Clubs', sublabel: '' }
                 ]
             },
@@ -1766,6 +1782,18 @@
                     { value: 'lounge', label: 'Airport lounge access', sublabel: 'Sky Club benefits' },
                     { value: 'status', label: 'Status acceleration', sublabel: 'Reaching next tier' },
                     { value: 'sharing', label: 'Sharing benefits', sublabel: 'Gifting status to others' }
+                ]
+            },
+            {
+                id: 'selectionTiming',
+                text: 'When do you plan to make your Choice Benefits selection?',
+                help: 'Important: Upgrade certificates must be booked AND flown by the end of the Medallion Year (Jan 31). Selecting late limits their usefulness.',
+                type: 'single',
+                options: [
+                    { value: 'early', label: 'Already selected or selecting soon', sublabel: 'Full year to use benefits' },
+                    { value: 'mid', label: 'Sometime mid-year (Apr-Aug)', sublabel: '6-10 months to use certificates' },
+                    { value: 'late', label: 'Later this year (Sep-Nov)', sublabel: '3-5 months for certificates' },
+                    { value: 'lastminute', label: 'Near the deadline (Dec-Jan)', sublabel: '⚠️ Very limited time for certificates' }
                 ]
             }
         ];
@@ -2502,6 +2530,7 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                                 <li><strong>No eligible Amex card:</strong> Statement credit → 0 points (ineligible)</li>
                                 <li><strong>Book Basic Economy:</strong> Upgrade certificates → 0 points (can't use them)</li>
                                 <li><strong>Already have lounge access:</strong> Sky Club membership → 0 points</li>
+                                <li><strong>Amex Plat with visit cap:</strong> Sky Club membership gets a boost</li>
                                 <li><strong>Domestic-only traveler:</strong> Global upgrades reduced by 60%</li>
                                 <li><strong>Pushing for next status tier:</strong> MQD value doubled</li>
                                 <li><strong>Travel with family:</strong> Gift status value increased by 50%</li>
@@ -2509,8 +2538,19 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                             </ul>
                         </div>
                         
+                        <div style={{ marginBottom: '1.25rem' }}>
+                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 3: Selection Timing</h4>
+                            <p>When you select affects certain benefits dramatically:</p>
+                            <ul style={{ marginTop: '0.5rem', marginLeft: '1.25rem', lineHeight: '1.8' }}>
+                                <li><strong>Upgrade certificates:</strong> Must be booked AND flown by Jan 31. Late selection = huge penalty.</li>
+                                <li><strong>Sky Club membership:</strong> Expires Jan 31. Selecting in December = ~2 months of access.</li>
+                                <li><strong>Gifted status:</strong> Recipients' status expires Jan 31 regardless of when you gift it.</li>
+                                <li><strong>Miles, vouchers, Amex credit:</strong> No timing penalty — use anytime or don't expire.</li>
+                            </ul>
+                        </div>
+                        
                         <div style={{ marginBottom: '1rem' }}>
-                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 3: Priority Boost</h4>
+                            <h4 style={{ fontWeight: 600, color: 'var(--delta-blue)', marginBottom: '0.5rem' }}>Step 4: Priority Boost</h4>
                             <p>Benefits matching your stated priorities get a 20-30% score boost to reflect personal preference beyond pure dollar value.</p>
                         </div>
                         
@@ -2613,6 +2653,13 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                     active: false,
                     applies: answers.travelCompanions !== 'family',
                     impact: '→ Gift status value increases 50%'
+                },
+                { 
+                    id: 'late_selection', 
+                    label: 'What if I wait until late in the year?', 
+                    active: false,
+                    applies: answers.selectionTiming === 'early' || answers.selectionTiming === 'mid',
+                    impact: '→ Upgrade certs, Sky Club, gift status lose value'
                 }
             ].filter(s => s.applies));
 
@@ -2647,6 +2694,9 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                             case 'travel_companions':
                                 modified.travelCompanions = 'family';
                                 break;
+                            case 'late_selection':
+                                modified.selectionTiming = 'late';
+                                break;
                         }
                     }
                 });
@@ -2668,8 +2718,12 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                         if (answersToUse.hasAmex === 'none' || answersToUse.hasAmex === 'gold') {
                             score = 0;
                             reasons.push('You need an eligible Delta Amex card (Platinum, Reserve, or Business versions) for this benefit.');
-                        } else {
-                            reasons.push(`Great value - this credit more than covers your ${answersToUse.hasAmex === 'reserve' ? 'Reserve' : 'Platinum'} card annual fee.`);
+                        } else if (answersToUse.hasAmex === 'multiple') {
+                            reasons.push('With multiple eligible cards, apply this to your Reserve to offset more of its $695 fee, or to your Platinum if you value that card\'s benefits more.');
+                        } else if (answersToUse.hasAmex === 'platinum_amex') {
+                            reasons.push('Great value — this credit covers your entire $350 Platinum card annual fee.');
+                        } else if (answersToUse.hasAmex === 'reserve') {
+                            reasons.push('Good value — this credit offsets a significant portion of your $695 Reserve card annual fee.');
                         }
                     }
 
@@ -2697,6 +2751,18 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                             if (answersToUse.flightsPerYear > 30) {
                                 reasons.push(`With ${answersToUse.flightsPerYear} flights/year, you have plenty of opportunities to use these.`);
                             }
+
+                            // CRITICAL: Selection timing penalty for upgrade certificates
+                            if (answersToUse.selectionTiming === 'lastminute') {
+                                score *= 0.2;
+                                reasons.push('⚠️ TIMING WARNING: Selecting near the deadline gives you only weeks to book AND fly. Certificates expire Jan 31 — strongly consider miles or vouchers instead.');
+                            } else if (answersToUse.selectionTiming === 'late') {
+                                score *= 0.5;
+                                reasons.push('⚠️ Timing concern: With 3-5 months to use these, make sure you have upgradeable trips planned. Certificates must be booked AND flown by Jan 31.');
+                            } else if (answersToUse.selectionTiming === 'mid') {
+                                score *= 0.85;
+                                reasons.push('You\'ll have 6-10 months to use these — reasonable window, but plan your trips soon after selecting.');
+                            }
                         }
                     }
 
@@ -2718,11 +2784,29 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                         if (answersToUse.loungeAccess === 'reserve' || answersToUse.loungeAccess === 'membership') {
                             score = 0;
                             reasons.push('You already have unlimited Sky Club access.');
+                        } else if (answersToUse.loungeAccess === 'amex_plat_unlimited') {
+                            score *= 0.2;
+                            reasons.push('You already have unlimited access via Amex Platinum spend threshold. Only valuable if you want to drop that card.');
+                        } else if (answersToUse.loungeAccess === 'amex_plat_limited') {
+                            score *= 1.3;
+                            reasons.push('Strong choice — your 10-visit Amex Platinum cap may not be enough. This provides unlimited access.');
+                        } else if (answersToUse.loungeAccess === 'day_pass') {
+                            score *= 1.1;
+                            reasons.push('Could provide good value if you visit clubs frequently. At $50-75/visit, a few visits make this worthwhile.');
                         } else if (answersToUse.loungeAccess === 'none') {
                             score *= 0.3;
                             reasons.push('Since you don\'t typically use Sky Clubs, this may not be your best value.');
                         } else {
                             reasons.push('Could provide good value if you frequently visit Sky Clubs.');
+                        }
+
+                        // Timing penalty — membership expires at Medallion year end
+                        if (answersToUse.selectionTiming === 'lastminute') {
+                            score *= 0.15;
+                            reasons.push('⚠️ TIMING WARNING: Membership expires Jan 31 — you\'d only get weeks of access. Not recommended.');
+                        } else if (answersToUse.selectionTiming === 'late') {
+                            score *= 0.4;
+                            reasons.push('⚠️ Timing concern: With only 3-5 months until expiration, calculate if the visits justify the choice slots.');
                         }
                     }
 
@@ -2736,6 +2820,15 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                             reasons.push('Solo travelers get less value from gifting status.');
                         } else {
                             reasons.push('Can be valuable if you have someone specific who would use the benefits.');
+                        }
+
+                        // Timing penalty — gifted status expires at Medallion year end
+                        if (answersToUse.selectionTiming === 'lastminute') {
+                            score *= 0.2;
+                            reasons.push('⚠️ TIMING WARNING: Gifted status expires Jan 31 — recipients would only get weeks of benefits.');
+                        } else if (answersToUse.selectionTiming === 'late') {
+                            score *= 0.5;
+                            reasons.push('⚠️ Timing concern: With only 3-5 months of status, recipients get limited value from upgrades and benefits.');
                         }
                     }
 
@@ -2935,7 +3028,8 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
             const [screen, setScreen] = useState('welcome'); // welcome, questions, results
             const [currentQuestion, setCurrentQuestion] = useState(0);
             const [answers, setAnswers] = useState({
-                flightsPerYear: 25
+                flightsPerYear: 25,
+                selectionTiming: 'early'
             });
 
             const handleStart = () => {
@@ -3032,7 +3126,7 @@ Find yours: spencerxsmith.com/delta-choice-benefits`);
                             </a>
                         </p>
                         <p style={{ marginTop: '0.75rem', fontSize: '0.7rem', color: 'var(--gray-400)' }}>
-                            © {new Date().getFullYear()} Spencer X Smith. Free to use, not free to redistribute.
+                            © {new Date().getFullYear()} Spencer X Smith. Free to use.
                         </p>
                     </footer>
                 </div>
