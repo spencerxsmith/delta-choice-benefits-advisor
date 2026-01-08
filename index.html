@@ -64,6 +64,7 @@
             --gold-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --white: #ffffff;
             --gray-50: #f9fafb;
+            --gray-600: #4b5563;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
             --gray-300: #d1d5db;
@@ -2045,6 +2046,10 @@ END:VCALENDAR`;
             };
 
             const urgencyLevel = daysLeft <= 7 ? 'critical' : daysLeft <= 30 ? 'warning' : 'normal';
+            @keyframes pulse {
+0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
 
             return (
                 <div className="countdown-banner" style={urgencyLevel === 'critical' ? { animation: 'pulse 2s infinite' } : {}}>
